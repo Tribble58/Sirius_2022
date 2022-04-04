@@ -1,3 +1,3 @@
-# Sirius_2022
+# Sirius 2022
 
-This repository is destined for Sirius Project
+This repository is destined for Sirius Project.
