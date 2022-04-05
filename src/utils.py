@@ -30,12 +30,10 @@ def parse_params(fpath):
 
 def generate_pnextract():
     path = '/home/sirius/gzprm2022/Sirius_2022/data/'
-    new_path = '/home/sirius/gzprm2022/Sirius_2022/data/'
     dat_path = "/home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/example/"
     mhd_files = {}
     raw_files = {}
     dirs_paths = []
-
     filenames = glob(path+"**/*.mhd", recursive=True)
     # for root, dirs, files in os.walk(path):
     #     for direc in dirs:
@@ -49,7 +47,8 @@ def generate_pnextract():
         # if file.endswith('.mhd'):
         name = file.replace('.mhd', '')
         name = name.split("/")[-1]
-        with open(dat_path + 'input_pnflow.dat', 'r') as inp:
+        
+        with open(dat_path + 'input_pnflow_original.dat', 'r') as inp:
             llist = []
             for line in inp:
                 if line.startswith('NETWORK'):
@@ -64,9 +63,9 @@ def generate_pnextract():
         
             # inp.writelines(llist)
         file_dir = "/".join(file.split("/")[:-1])
+        print(file_dir)
         pnextract = os.system(f'cd {file_dir}; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnextract {name}.mhd > log.pnextract; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnflow input_pnflow.dat > log.pnflow')
         # files_list_mhd.append(file)
-        sys.exit()
 
 # params_dict = {}
 # for root, dirs, files in os.walk(path):
