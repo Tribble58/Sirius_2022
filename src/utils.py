@@ -29,8 +29,10 @@ def parse_params(fpath):
 
 
 def generate_pnextract():
-    path = '/home/sirius/gzprm2022/Sirius_2022/data/'
-    dat_path = "/home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/example/"
+    path_to_sirius_dir = '/home/sirius/Документы'
+    path = path_to_sirius_dir + '/Sirius_2022/data/'
+    new_path = '/home/sirius/gzprm2022/Sirius_2022/data/'
+    dat_path = path_to_sirius_dir + "/Sirius_2022/data/sandstone/sandstone_4/sk129/raw/"
     mhd_files = {}
     raw_files = {}
     dirs_paths = []
@@ -44,27 +46,29 @@ def generate_pnextract():
     #             files_list_raw = []
     #             for r, d, files in os.walk(new_path):
     for file in filenames:
-        # if file.endswith('.mhd'):
-        name = file.replace('.mhd', '')
-        name = name.split("/")[-1]
-        
-        with open(dat_path + 'input_pnflow_original.dat', 'r') as inp:
-            llist = []
-            for line in inp:
-                if line.startswith('NETWORK'):
-                    line = f'NETWORK  F {name};   // the base name for of the network file, without _link1.dat, _link2, _pore1'
-                if line.startswith('TITLE'):
-                    line = f'TITLE  {name};  // base name for the output files' + "\n"
-                llist.append(line)
+        if ('VElems' not in file) and ('vox' not in file):
+            name = file.replace('.mhd', '')
+            name = name.split("/")[-1]
 
-        with open(dat_path + 'input_pnflow.dat', 'w') as inp:
-            for item in llist:
-                inp.write(item)
-        
-            # inp.writelines(llist)
-        file_dir = "/".join(file.split("/")[:-1])
-        print(file_dir)
-        pnextract = os.system(f'cd {file_dir}; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnextract {name}.mhd > log.pnextract; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnflow input_pnflow.dat > log.pnflow')
+            with open(dat_path + 'input_pnflow_original.dat', 'r') as inp:
+                llist = []
+                for line in inp:
+                    if line.startswith('NETWORK'):
+                        line = f'NETWORK  F {name};   // the base name for of the network file, without _link1.dat, _link2, _pore1'
+                    if line.startswith('TITLE'):
+                        line = f'TITLE  {name};  // base name for the output files' + "\n"
+                    llist.append(line)
+
+            with open(dat_path + 'input_pnflow.dat', 'w') as inp:
+                for item in llist:
+                    inp.write(item)
+
+                # inp.writelines(llist)
+            file_dir = "/".join(file.split("/")[:-1])
+            print(file_dir)
+            print(name)
+            pnextract = os.system(f'cd {file_dir}; /home/sirius/00_ikt/software/pnflow-master_commit20210823/bin/pnextract {name}.mhd > log.pnextract; /home/sirius/00_ikt/software/pnflow-master_commit20210823/bin/pnflow input_pnflow.dat > log.pnflow')
+
         # files_list_mhd.append(file)
 
 # params_dict = {}
