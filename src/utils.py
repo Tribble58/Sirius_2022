@@ -64,7 +64,7 @@ def generate_pnextract():
         
             # inp.writelines(llist)
         file_dir = "/".join(file.split("/")[:-1])
-        pnextract = os.system(f'cd {file_dir}; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnextract {name} > log.pnextract; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnflow input_pnflow.dat > log.pnflow')
+        pnextract = os.system(f'cd {file_dir}; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnextract {name}.mhd > log.pnextract; /home/sirius/gzprm2022/Sirius_2022/info/software/pnflow-master_commit20210823/bin/pnflow input_pnflow.dat > log.pnflow')
         # files_list_mhd.append(file)
         sys.exit()
 
